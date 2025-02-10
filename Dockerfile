@@ -5,16 +5,12 @@ COPY package.json bun.lockb ./
 RUN bun install
 
 COPY . .
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
-# Generate Prisma Client
-RUN bunx prisma generate
+ARG API_URL
+ENV API_URL=${API_URL}
 
 # Build application
 RUN bun run build
 
-# Run migrations (for production)
-RUN bunx prisma migrate deploy
 
 EXPOSE 3000
 ENV PORT=3000
